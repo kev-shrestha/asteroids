@@ -9,7 +9,7 @@ def main():
     print(f"Screen height: {SCREEN_HEIGHT}")
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
+    
     player =  Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
 
     Clock = pygame.time.Clock()
@@ -24,6 +24,7 @@ def main():
 
         screen.fill("black")
         
+        player.update(dt)
         player.draw(screen)
 
         pygame.display.flip()
