@@ -1,6 +1,6 @@
 import pygame
 import sys
-from constants import SCREEN_WIDTH, SCREEN_HEIGHT
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT, ASTEROID_MAX_RADIUS, ASTEROID_MIN_RADIUS, ASTEROID_MED_RADIUS
 from logger import log_state, log_event
 from player import Player
 from asteroid import Asteroid
@@ -12,12 +12,15 @@ def main():
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
 
+
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    
-    
+
     Clock = pygame.time.Clock()
     dt = 0
+
+    score = 0
+
 
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
@@ -60,8 +63,20 @@ def main():
             for shot in shots:
                 if asteroid.collides_with(shot) == True:
                     log_event("asteroid_shot")
-                    asteroid.split()
                     shot.kill()
+
+                    if asteroid.radius <= ASTEROID_MIN_RADIUS:
+                        score += 500
+
+                    if asteroid.radius <= ASTEROID_MED_RADIUS and asteroid.radius > ASTEROID_MIN_RADIUS:
+                        score += 300
+
+                    if asteroid.radius > ASTEROID_MED_RADIUS:
+                        score += 100
+
+                    print(score)
+                    asteroid.split()
+                    
 
 
         for obj in drawable:
