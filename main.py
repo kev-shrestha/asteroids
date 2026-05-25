@@ -56,6 +56,7 @@ def main():
                 log_event("player_hit")
 
                 print("Game over!")
+                print(f"Total score: {score}")
 
                 sys.exit()
 
@@ -74,10 +75,13 @@ def main():
                     if asteroid.radius > ASTEROID_MED_RADIUS:
                         score += 100
 
-                    print(score)
                     asteroid.split()
                     
+        pygame.font.init()
 
+        score_text = pygame.font.SysFont("lexend", 30)
+        score_image = score_text.render(f"Score: {score}", 1, (255,255,255))
+        screen.blit(score_image, (1850, 10))
 
         for obj in drawable:
             obj.draw(screen)
